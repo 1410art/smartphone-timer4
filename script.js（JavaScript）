@@ -1,0 +1,21 @@
+let startTime = localStorage.getItem("startTime") || Date.now();
+localStorage.setItem("startTime", startTime);
+const limit = 60 * 1000; // 1分（制限時間）
+
+function updateTimer() {
+    let elapsedTime = Date.now() - startTime;
+    let seconds = Math.floor(elapsedTime / 1000);
+    document.getElementById("timer").textContent = `経過時間: ${seconds}秒`;
+
+    if (elapsedTime > limit) {
+        alert("スマホの使いすぎ！休憩しよう！");
+        window.location.href = "about:blank"; // 強制終了
+    }
+}
+
+setInterval(updateTimer, 1000);
+
+document.getElementById("reset").addEventListener("click", () => {
+    localStorage.setItem("startTime", Date.now());
+    startTime = Date.now();
+});
